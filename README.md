@@ -101,12 +101,6 @@ This work received support from:
 
 ---
 
-## License
-
-Please add a LICENSE file (MIT, Apache‑2.0, GPL‑3.0, etc.) and state it here.
-
----
-
 ## Changelog
 
 - **v0.1** – Initial public release with GENERIC example, UMAT (`Sub_MechDisc.f`) and UEL (`Sub_TransDisc.f`).
