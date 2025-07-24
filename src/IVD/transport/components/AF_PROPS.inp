@@ -1,0 +1,40 @@
+*******************************************************************
+**  Specification Of Material Properties: Annulus Fibrosus
+*******************************************************************
+**
+**         VARS:  E: dummy young's modulus
+**                NU: dummy poisson's ratio
+**                D_WAT(O2): water diffusion coefficient for oxygen
+**                D_WAT(lac): water diffusion coefficient for lactate
+**                D_WAT(glu): water diffusion coefficient for glucose
+**                ph_val_0: initial ph value
+**                CELL_rho_0: initial cell density
+**                CELL_viab_0: initial cell viability
+**                a_K, b_K, c_K: Constants for the K(CELL_rho_0) model
+**                ALPHA_pH: Death rate due to acidity
+**                GlucThres: Glucose threshold for cell viability
+**                pHThres: pH threshold for cell viability
+**                NF0h: Alternative valuees for the SDVs - Homogeneous Initial water content
+**                FREQ: Pressure frequency
+**
+**       I VARS:  CNUMBER: Tissue Number
+**                nlSdv: Number of local sdv's per integ pt
+**                ngSdv: Number of global sdv's per integ pt
+**                NF0h_d: Decision... Use NF0h (Homogeneous NF0)? no NF0h_d = 0, yes NF0h_d = 1
+**                nD_d: Decision... Use ∇D as ZERO (nD_d=0), Isotropic (nD_d=1), Anisotropic (nD_d=2)
+**                PN_TIME: Total desired protein expresion simulation time (hours)
+**
+*******************************************************************
+**
+** use with the following subroutines:
+**	1) Sub_TransDisc.f
+**
+*******************************************************************
+** PROPS:
+** E,   NU, D_WAT(O2), D_WAT(lac), D_WAT(glu), ph_val_0, CELL_rho_0, CELL_viab_0,
+1.E4,  0.3,    3.0E-3,    1.39E-3, 9.16667E-4,      7.5,    5.55E-3,         1.0,
+** a_K, b_K,     c_K,    ALPHA_pH, GlucThres, pHThres, NF0h, FREQ,
+3.1767, 0.0, -1.7989, -0.00000377,     0.511,    6.78, 0.75,  0.0,
+** CNUMBER, nlSdv, ngSdv, NF0h_d, nD_d, PN_TIME
+         1,     1,    35,      0,    2,       1
+*******************************************************************

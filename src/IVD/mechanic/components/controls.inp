@@ -1,0 +1,12 @@
+*Controls, reset
+*Controls, analysis=discontinuous
+*Controls, parameters=line search
+4, 4., 0.05, , 0.15
+*Controls, parameters=field, field=displacement
+0.075, 0.075, , , , , , 
+*Controls, parameters=field, field=hydrostatic fluid pressure
+0.075, 0.075, , , , , , 
+*Controls, parameters=field, field=rotation
+0.075, 0.075, , , , , , 
+*Controls, parameters=field, field=pore fluid pressure
+0.075, 0.075, , , , , ,

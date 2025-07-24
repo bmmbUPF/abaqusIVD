@@ -1,0 +1,37 @@
+*******************************************************************
+**  Specification Of Material Properties: diffusion Chamber
+*******************************************************************
+**
+**         VARS:  E: dummy young's modulus
+**                NU: dummy poisson's ratio
+**                D_WAT(O2): water diffusion coefficient for oxygen
+**                D_WAT(lac): water diffusion coefficient for lactate
+**                D_WAT(glu): water diffusion coefficient for glucose
+**                ph_val_0: initial ph value
+**                CELL_rho_0: initial cell density
+**                CELL_viab_0: initial cell viability
+**                k_val: value for the cell viability model
+**                ALPHA_pH: Death rate due to acidity
+**                GlucThres: Glucose threshold for cell viability
+**                pHThres: pH threshold for cell viability
+**                NF0h: NF0h: Alternative valuees for the SDVs - Homogeneous Initial water content
+**
+**       I VARS:  CNUMBER: Tissue Number
+**                nlSdv: Number of local sdv's per integ pt
+**                ngSdv: Number of global sdv's per integ pt
+**                NF0h_d: Decision... Use NF0h (Homogeneous NF0)? yes NF0h_d = 1, no NF0h_d = 0
+**
+*******************************************************************
+**
+** use with the following subroutines:
+**	1) Sub_TransDisc.f
+**
+*******************************************************************
+** PROPS:
+** E,   NU, D_WAT(O2), D_WAT(lac), D_WAT(glu), ph_val_0, CELL_rho_0, CELL_viab_0,
+1.E4,  0.3,    3.0E-3,    1.39E-3, 9.16667E-4,      7.4,     2.0E-3,         1.0,
+** k_val,    ALPHA_pH, GlucThres, pHThres, NF0h, CNUMBER,  nlSdv, ngSdv,
+     0.2, -0.00000343,       0.5,    6.78, 0.95,       0,      1,     9,
+** NF0h_d
+        1
+*******************************************************************
