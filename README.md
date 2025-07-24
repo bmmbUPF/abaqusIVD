@@ -97,7 +97,7 @@ Questions, issues, or suggestions: **estefano.munoz.moya@gmail.com** or **estefa
 
 This work received support from:
 - EU Horizon 2020 Marie Skłodowska‑Curie (MSCA‑2020‑ITN‑ETN GA: 955735)  
-- European Research Council (ERC‑2021‑CoG‑O‑Health‑101044828)  
+- European Research Council (ERC‑2021‑CoG‑O‑Health‑101044828): Views and opinions expressed are however those of the author(s) only and do not necessarily reflect those of the European Union or the European Research Council Executive Agency. Neither the European Union nor the granting authority can be held responsible for them.
 
 ---
 
