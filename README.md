@@ -45,7 +45,7 @@ abaqusIVD/
 ├── GENERIC_Transport.inp     # Multi-species transport (UEL, submodeling)
 ├── Sub_MechDisc.f            # UMAT
 ├── Sub_TransDisc.f           # UEL
-├── src/                      # (optional) helper scripts/macros
+├── src/                      # (necessary to run the models) helper scripts/macros
 └── README.md
 ```
 
