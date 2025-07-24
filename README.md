@@ -87,6 +87,28 @@ abaqus job=GENERIC_Transport input=GENERIC_Transport globalmode=GENERIC_Mechanic
 
 ---
 
+## About the author & connect
+
+**Estefano Muñoz‑Moya**  
+**PhD student (ESR14), Biomechanics & Mechanobiology (BMMB), SIMBIOsys, BCN MedTech, Department of Engineering, Universitat Pompeu Fabra (UPF), Barcelona, Spain.**
+
+**Biosketch**  
+Estefano Muñoz‑Moya is the Early Stage Researcher (ESR) 14 and Ph.D. candidate in the European Project Disc4All (H2020‑MSCA‑ITN‑2020) at Universitat Pompeu Fabra. He holds a degree in Engineering Sciences with a mention in Mechanical Engineering (2017), a Civil Engineering degree (2020), and an M.Sc. in Mechanical Engineering (2020) from the University of Santiago de Chile. His current research focuses on systematizing multiscale modeling of intervertebral disc degeneration, locally integrating molecular/cell and tissue/organ scale models into intelligent atlases of simulated data to enable spatio‑temporal characterization of degeneration and clinically exploitable risk hierarchies.
+
+**Links**
+- 🌐 Website: <http://estefano23.github.io>  
+- 📨 Email: <mailto:estefano.munoz@upf.edu>  
+- 🧭 ORCID: <https://orcid.org/0000-0001-5222-4071>  
+- 🦋 Bluesky: <https://bsky.app/profile/estefano23.bsky.social>  
+- 🐦 X (Twitter): <https://x.com/estefanoMunoz23>  
+- 💻 GitHub: <https://github.com/estefano23/>  
+- 🔬 ResearchGate: <https://www.researchgate.net/profile/Estefano-Munoz-Moya>  
+- 💼 LinkedIn: <https://www.linkedin.com/in/estefano-munoz-moya/>  
+- 🔁 Loop (Frontiers): <https://loop.frontiersin.org/people/1555265/overview>  
+- 🔗 All links in one place: <https://linktr.ee/estefano23>
+
+---
+
 ## Contact
 
 Questions, issues, or suggestions: **estefano.munoz.moya@gmail.com** or **estefano.munoz@upf.edu**
