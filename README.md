@@ -31,7 +31,7 @@ If you **use any of the morphed, patient‑personalized FE models from SpineView
    **Front. Bioeng. Biotechnol. 12:1384599.** https://doi.org/10.3389/fbioe.2024.1384599
 
 2. **Muñoz‑Moya E., Rasouligandomani M., Ruiz Wills C., Chemorion F., Piella G., Noailly J. (2023).**  
-   *Repository of IVD Patient‑Specific FE Models.* Zenodo. https://doi.org/10.5281/zenodo.8325042
+   *Repository of IVD Patient‑Specific FE Models.* Zenodo. https://doi.org/10.5281/zenodo.8325041
 
 Explore the cohort online at **SpineView UI**: <https://ivd.spineview.upf.edu/>
 
