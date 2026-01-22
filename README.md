@@ -53,13 +53,28 @@ abaqusIVD/
 
 ## Prerequisites
 
-- **Abaqus/Standard 2020 (or newer)**.
-- A **Fortran compiler** compatible with your Abaqus version (typically GFortran, or Intel ifort).
+- **Abaqus/Standard 2020** (version used in the paper). Newer versions may work but should be validated on your system.
+- A **Fortran compiler configured in Abaqus** (e.g., GFortran or Intel ifort, depending on your Abaqus installation).
+- Sanity check: `abaqus verify -user_std` should succeed before running the examples.
 - A machine with multiple CPUs if you want to leverage `cpus=Ncpu` and `mp_mode=THREADS`.
+- Set `NCPU` to an integer (e.g., 8) and pass it to Abaqus as `cpus=$NCPU` (Linux/macOS) or `cpus=%NCPU%` (Windows).
+
 
 ---
 
-## Quick start (GENERIC example)
+## Common setup issues (quick fixes)
+
+- If you copy/paste commands, replace the CPU placeholder with an integer:
+  - For example, with 9 cpus, use `cpus=8`
+
+- If Abaqus cannot compile the user subroutine:
+  1) run `abaqus verify -user_std`
+  2) ensure your Fortran compiler matches the Abaqus requirements for your version
+  3) re-run the job
+
+---
+
+## Quick start (GENERIC example, copy/paste)
 
 ### 1) Run the mechanical baseline (UMAT)
 
