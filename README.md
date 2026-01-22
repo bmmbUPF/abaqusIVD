@@ -65,7 +65,7 @@ abaqusIVD/
 ## Common setup issues (quick fixes)
 
 - If you copy/paste commands, replace the CPU placeholder with an integer:
-  - For example, with 9 cpus, use `cpus=8`
+  - For example, with 8 cpus, use `cpus=8`
 
 - If Abaqus cannot compile the user subroutine:
   1) run `abaqus verify -user_std`
