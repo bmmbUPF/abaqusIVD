@@ -57,7 +57,7 @@ abaqusIVD/
 - A **Fortran compiler configured in Abaqus** (e.g., GFortran or Intel ifort, depending on your Abaqus installation).
 - Sanity check: `abaqus verify -user_std` should succeed before running the examples.
 - A machine with multiple CPUs if you want to leverage `cpus=Ncpu` and `mp_mode=THREADS`.
-- Set `NCPU` to an integer (e.g., 8) and pass it to Abaqus as `cpus=$NCPU` (Linux/macOS) or `cpus=%NCPU%` (Windows).
+- Set `NCPU` to an integer (e.g., 8) and pass it to Abaqus as `cpus=$NCPU` (Linux) or `cpus=%NCPU%` (Windows).
 
 
 ---
