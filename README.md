@@ -101,8 +101,8 @@ To consider before running the commands:
 
 - Replace Ncpu with an integer (e.g., 8).
 - For the macro usage (e.g., n_f0), if you are in the project root:<br>
-PATH/TO/THE/MACROS: 'src/python/functions/nf0.py'<br>
-PATH/MECH_SIM.odb and PATH/TRANSP_SIM.inp arguments: 'GENERIC_Mechanic.odb GENERIC_Transport.inp'.
+PATH/TO/THE/MACROS: `src/python/functions/nf0.py`.<br>
+PATH/MECH_SIM.odb and PATH/TRANSP_SIM.inp arguments: `GENERIC_Mechanic.odb GENERIC_Transport.inp`.
 
 ---
 
