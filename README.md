@@ -53,7 +53,7 @@ abaqusIVD/
 
 ## Prerequisites
 
-- **Abaqus/Standard 2020** (version used in the paper). Newer versions may work but should be validated on your system.
+- **Abaqus/Standard 2020** (version used in the paper). Newer versions work, but should be validated on your system.
 - A **Fortran compiler configured in Abaqus** (e.g., GFortran or Intel ifort, depending on your Abaqus installation).
 - Sanity check: `abaqus verify -user_std` should succeed before running the examples.
 - A machine with multiple CPUs if you want to leverage multi-threading (e.g., `cpus=8` and `mp_mode=THREADS`).
