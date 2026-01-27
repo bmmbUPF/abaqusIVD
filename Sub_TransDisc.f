@@ -178,6 +178,10 @@ C (Elem, IP = SDV)
       DOUBLE PRECISION, DIMENSION(numSDVxIdElem,numInt) :: SDV_NF0
       DOUBLE PRECISION, DIMENSION(numSDVxIdElem,numInt) :: SDV_SP
 
+C SDV file read status
+      INTEGER :: NF0_d_file                                                       ! 1: file read correctly, 0: file not read
+      INTEGER :: SP_d_file                                                        ! 1: file read correctly, 0: file not read
+
 C -----------------------------------------------------------
 C Set the number of SDV's here
 C this variable is used to store the SDV's from the UEL
@@ -639,6 +643,7 @@ C read the file and extract the values for every integration point
      1,IOSTAT=error)
 
       IF (error .EQ. 0) THEN
+            NF0_d_file = 1                                                     ! file read correctly
             iElem = 0
             iIP = 0
             SDV = ZERO
@@ -655,6 +660,7 @@ C Store the values ELEM, IP, SDV
             END DO
             CLOSE(15)
       ELSE
+      NF0_d_file = 0                                                           ! file not read
       CLOSE(15)
       OPEN(15,FILE=infoFilePath_T_D, STATUS='OLD', POSITION='APPEND')
       WRITE(15,*) ' '
@@ -725,6 +731,7 @@ C read the file and extract the values for every integration point
      1,IOSTAT=error)
 
       IF (error .EQ. 0) THEN
+            SP_d_file = 1                                                      ! file read correctly
             iElem = 0
             iIP = 0
             SDV = ZERO
@@ -741,6 +748,7 @@ C Store the values ELEM, IP, SDV
             END DO
             CLOSE(15)
       ELSE
+      SP_d_file = 0                                                           ! file not read
       CLOSE(15)
             DO I = 1,numSDVxIdElem
                   DO J = 1,numInt
@@ -1726,13 +1734,13 @@ C NF0: Initial water content
 C NF0h_d: Use NF0h? yes NF0h_d = 1, no NF0h_d = 0
 C Passing the values of NF0 from node to integration point
 C Using homogeneous value for NF0
-      IF (NF0h_d .EQ. 1) THEN
+      IF (NF0h_d .EQ. 1 .OR. NF0_d_file .EQ. 0) THEN
             DO K = 1,NNODE
                   NF0 = NF0 + NF0h*N(K)
             END DO
 
 C Using the values of NF0 from the previous mechanical simulation
-      ELSE IF (NF0h_d .EQ. 0) THEN
+      ELSE IF (NF0h_d .EQ. 0 .AND. NF0_d_file .EQ. 1) THEN
             NF0 = SDV_NF0(JELEM-ElemOffset,i_intPT)
       END IF
 
@@ -1740,7 +1748,9 @@ C-------------------------------------------
 C SP: Total Stress Pressure
       SP = ZERO
 C Using the values of SP from the previous mechanical simulation
-      SP = SDV_SP(JELEM-ElemOffset,i_intPT)
+      IF (SP_d_file .EQ. 1) THEN
+            SP = SDV_SP(JELEM-ElemOffset,i_intPT)
+      END IF
 
 C--------------------------------------------------------------------------
 C Obtain state variables from previous sep

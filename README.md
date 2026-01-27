@@ -56,27 +56,27 @@ abaqusIVD/
 - **Abaqus/Standard 2020** (version used in the paper). Newer versions may work but should be validated on your system.
 - A **Fortran compiler configured in Abaqus** (e.g., GFortran or Intel ifort, depending on your Abaqus installation).
 - Sanity check: `abaqus verify -user_std` should succeed before running the examples.
-- A machine with multiple CPUs if you want to leverage `cpus=Ncpu` and `mp_mode=THREADS`.
-- Set `NCPU` to an integer (e.g., 8) and pass it to Abaqus as `cpus=$NCPU` (Linux) or `cpus=%NCPU%` (Windows).
-
-
+- A machine with multiple CPUs if you want to leverage multi-threading (e.g., `cpus=8` and `mp_mode=THREADS`).
 ---
 
 ## Common setup issues (quick fixes)
 
-- If you copy/paste commands, replace the CPU placeholder with an integer:
+- In the commands below, replace Ncpu with an integer (e.g., 8):
   - For example, with 8 cpus, use `cpus=8`
 
+- For Abaqus Python macros, note the double dash separator (`--`):
+  - Syntax: `abaqus cae noGUI=PATH/TO/THE/MACROS -- <arguments>`
+
 - If Abaqus cannot compile the user subroutine:
-  1) run `abaqus verify -user_std`
-  2) ensure your Fortran compiler matches the Abaqus requirements for your version
-  3) re-run the job
+  - run `abaqus verify -user_std`
+  - ensure your Fortran compiler matches the Abaqus requirements for your version
+  - re-run the job
 
 ---
 
-## Quick start (GENERIC example, copy/paste)
+## Quick start (GENERIC example)
 
-### 1) Run the mechanical baseline (UMAT)
+### 1) Run the mechanical baseline (UMAT).
 
 From the repository root:
 
@@ -86,19 +86,34 @@ abaqus job=GENERIC_Mechanic input=GENERIC_Mechanic user=Sub_MechDisc.f cpus=Ncpu
 
 This creates `GENERIC_Mechanic.odb`, which is then used as the **global model** for transport.
 
+### 1.|Optional| Map SDVs (e.g., initial water content n_f0) from the mechanical simulation, through Python Abaqus macros, to integrate it to the transport one
+
+```bash
+abaqus cae noGUI=PATH/TO/THE/MACROS -- PATH/MECH_SIM.odb PATH/TRANSP_SIM.inp
+```
 ### 2) Run the coupled multi‑species transport (UEL + submodeling)
 
 ```bash
-abaqus job=GENERIC_Transport input=GENERIC_Transport globalmode=GENERIC_Mechanic.odb user=Sub_TransDisc.f cpus=Ncpu mp_mode=THREADS interactive
+abaqus job=GENERIC_Transport input=GENERIC_Transport globalmodel=GENERIC_Mechanic.odb user=Sub_TransDisc.f cpus=Ncpu mp_mode=THREADS interactive
 ```
+
+To consider before running the commands:
+
+- Replace Ncpu with an integer (e.g., 8).
+- For the macro usage (e.g., n_f0), if you are in the project root:<br>
+PATH/TO/THE/MACROS: 'src/python/functions/nf0.py'<br>
+PATH/MECH_SIM.odb and PATH/TRANSP_SIM.inp arguments: 'GENERIC_Mechanic.odb GENERIC_Transport.inp'.
 
 ---
 
 ## Reproducing the paper’s workflow (very short version)
 
 1. Run the **mechanical** simulation once to get the desired mechanical baseline.  
-2. Launch the **transport** simulation(s), pointing to that mechanical `.odb` with `globalmode=` to reuse the deformations while freely exploring transport parameters and time stepping.  
-3. (Optional) Map the solute fields from the GENERIC model to any **SpineView** patient‑personalized model (shared mesh topology enables a direct mapping).
+1.|**Optional**| Map the SDV fields from the mechanical model to be used in the transport.
+
+2. Launch the **transport** simulation(s), pointing to that mechanical `.odb` with `globalmodel=` to reuse the deformations while freely exploring transport parameters and time stepping.  
+
+3. |**Optional**| Map the solute fields from the GENERIC model to any **SpineView** patient‑personalized model (shared mesh topology enables a direct mapping).
 
 ---
 
