@@ -11,7 +11,7 @@ Video instructions (click to play):
 **`abaqusIVD: Fully Coupled Multi-Species Mechano-Transport UEL/UMAT for IVD Workflow`**
 
 <p align="center">
-  <a href="https://youtu.be/9xkGBaXZch8">
+  <a href="https://youtu.be/9xkGBaXZch8" target="_blank" rel="noopener noreferrer">
     <img src="https://img.youtube.com/vi/9xkGBaXZch8/hqdefault.jpg" alt="abaqusIVD demo video">
   </a>
 </p>
