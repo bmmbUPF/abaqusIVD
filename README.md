@@ -7,7 +7,8 @@ Coupled **mechano‑transport** finite‑element subroutines for the interverteb
 
 Video instructions (click to play):
 
-- **How to run the simulations** — `abaqusIVD: Fully Coupled Multi-Species Mechano-Transport UEL/UMAT for IVD Workflow`
+- **How to run the simulations** — `abaqusIVD: Fully Coupled Multi-Species Mechano-Transport UEL/UMAT for IVD Workflow`.
+
 [![abaqusIVD demo video](https://img.youtube.com/vi/9xkGBaXZch8/hqdefault.jpg)](https://youtu.be/9xkGBaXZch8)
 
 ---
