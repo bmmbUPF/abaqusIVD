@@ -2,6 +2,10 @@
 
 Coupled **mechano‑transport** finite‑element subroutines for the intervertebral disc (IVD).
 
+Demo video (click to play):
+
+[![abaqusIVD demo video](https://img.youtube.com/vi/9xkGBaXZch8/hqdefault.jpg)](https://youtu.be/9xkGBaXZch8)
+
 The repository contains:
 
 - **`Sub_MechDisc.f`** — UMAT for the poro–hyper–visco–elastic mechanical baseline  
