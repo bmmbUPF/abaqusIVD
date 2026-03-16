@@ -500,8 +500,8 @@ C
 c
 c    LOCAL ARRAYS
 c------------------------------------------------------------------------
-c    BBAR   - DEVIATORIC RIGHT CAUCHY-GREEN TENSOR
-c    DISTGR - DEVIATORIC DEFORMATION GRADIENT (DISTORTION TENSOR)
+c    BBAR   - ISOCHORIC LEFT CAUCHY-GREEN TENSOR (Voigt order: 11 22 33 12 13 23)
+c    DISTGR - ISOCHORIC DEFORMATION GRADIENT
 c------------------------------------------------------------------------
 c
       DOUBLE PRECISION :: fi_int,fi_ext,cF0,cF,NF0,ctot,RR,TT,
@@ -517,14 +517,15 @@ C PROPS
       DOUBLE PRECISION :: C10,NF_m,ce,cFeq,COLL_rho
 C STIFFNESS
       DOUBLE PRECISION :: DFG_inv(NDIM,NDIM),DFG_invT(NDIM,NDIM),DETDFG
-      DOUBLE PRECISION :: SCALE,TRBBAR,EG,EG23,PR,EK,G23
+      DOUBLE PRECISION :: SCALE,TRBBAR,EG,JS23,EG13,G23
+      DOUBLE PRECISION :: PR,EK,KW,ISOADD,DEVADD
       DOUBLE PRECISION :: TERM1,TERM2,TERM3
 C LOOP VARIABLES
       INTEGER :: i,j,k,K1,K2,stat
 
 c
 c------------------------------------------------------------------------
-c    UMAT FOR COMPRESSIBLE NEO-HOOKEAN HYPERELASTICITY
+c    UMAT FOR THE STRAIN-DEPENDENT NON-FIBRILLAR WILSON/SCHROEDER MATRIX MODEL
 c    CANNOT BE USED FOR PLANE STRESS
 c------------------------------------------------------------------------
 c
@@ -878,9 +879,9 @@ c
      1                  (NF+(ONE-NF)*rhoS)
             dcFexfdnnf = -rhoS*COLL_rho*ci_phi*cF/(NF-ci_phi*
      1                   COLL_rho*rhoS+ ci_phi*COLL_rho*rhoS*NF)**TWO
-            dcFexfdPosm = 2.1920D0*cF*NF/(NF_m-(0.5931D0*EXP(3.696D0*
+            dcFexfdPosm = 2.0141676D0*cF*NF/(NF_m-(0.5931D0*EXP(3.396D0*
      1                    Posm)+0.9222D0)*COLLF_m)**TWO
-     2                    /(NF+(ONE-NF)*rhoS)*EXP(3.696D0*Posm)*COLLF_m
+     2                    /(NF+(ONE-NF)*rhoS)*EXP(3.396D0*Posm)*COLLF_m
       END IF
 c
 c------------------------------------------------------------------------
@@ -917,11 +918,12 @@ c    CALCULATE THE STRESS AND ALGORITHMIC BULK MODULUS
 c
 c------------------------------------------------------------------------
 c
-      TRBBAR = (BBAR(1)+BBAR(2)+BBAR(3))/THREE                          !  I1 / 3
-                  
+      NS0    = ONE - NF0                                                !  initial solid fraction
+      TRBBAR = (BBAR(1)+BBAR(2)+BBAR(3))/THREE                          !  I1 / 3     
       EG    = TWO*C10/DETDFG                                            !  Gm / J
-      EG23  = EG*TWO/THREE                  
-      NS0   = ONE - NF0                                                 !  initial solid fraction
+      JS23  = DETDFG**(TWO/THREE)                                       !  J**(2/3)
+      EG13   = EG*JS23                                                  !  Gm / J**(1/3)
+      ISOADD = EG13*(TRBBAR-ONE)                                        !  additional isotropic term
 
       VOLU1 = DETDFG + NS0
       VOLU2 = -DETDFG+NS0
@@ -946,15 +948,18 @@ c--- derivative  dp/dJ  (needed for Keff) ---------------------------------
      2       / (DETDFG * VOLU2**THREE)
 
 c--- algorithmic bulk modulus --------------------------------------------
-      EK = DETDFG * ( G23*(TERM1 + TERM2 + TERM3) + dPosm ) + PR
+      EK = DETDFG * ( G23*(TERM1 + TERM2 + TERM3) + dPosm ) + PR        ! Effective bulk modulus (Keff)
+      KW = EK - TWO*EG13/THREE                                          ! Additional stiffness term for volumetric response (Keff - 2Gm/3J**(1/3))
 
 c--- Cauchy stress  -------------------------------------------------------
       DO K1 = 1, NDI                                                    ! normal components (11-33)
-            STRESS(K1) = EG*( BBAR(K1) - DETDFG**(TWO/THREE) ) + PR
+            DEVADD     = EG13*(BBAR(K1)-TRBBAR)                         ! distortional term
+            STRESS(K1) = PR + ISOADD + DEVADD
       END DO
 
       DO K1 = NDI+1, NDI+NSHR                                           ! shear components (12-23)
-            STRESS(K1) = EG*BBAR(K1)
+            DEVADD     = EG13*BBAR(K1)                                  !  distortional term
+            STRESS(K1) = DEVADD
       END DO
 
 c
@@ -964,28 +969,35 @@ c    CALCULATE THE STIFFNESS
 c
 c------------------------------------------------------------------------
 c
-      DDSDDE(1, 1)= EG23*(BBAR(1)+TRBBAR)+EK
-      DDSDDE(2, 2)= EG23*(BBAR(2)+TRBBAR)+EK
-      DDSDDE(3, 3)= EG23*(BBAR(3)+TRBBAR)+EK
-      DDSDDE(1, 2)=-EG23*(BBAR(1)+BBAR(2)-TRBBAR)+EK
-      DDSDDE(1, 3)=-EG23*(BBAR(1)+BBAR(3)-TRBBAR)+EK
-      DDSDDE(2, 3)=-EG23*(BBAR(2)+BBAR(3)-TRBBAR)+EK
-      DDSDDE(1, 4)= EG23*BBAR(4)/TWO
-      DDSDDE(2, 4)= EG23*BBAR(4)/TWO
-      DDSDDE(3, 4)=-EG23*BBAR(4)
-      DDSDDE(4, 4)= EG*(BBAR(1)+BBAR(2))/TWO
+      DDSDDE(1,1) = TWO*EG13*BBAR(1) + KW
+      DDSDDE(2,2) = TWO*EG13*BBAR(2) + KW
+      DDSDDE(3,3) = TWO*EG13*BBAR(3) + KW
+
+      DDSDDE(1,2) = KW
+      DDSDDE(1,3) = KW
+      DDSDDE(2,3) = KW
+
+      DDSDDE(1,4) = EG13*BBAR(4)
+      DDSDDE(2,4) = EG13*BBAR(4)
+      DDSDDE(3,4) = ZERO
+
+      DDSDDE(4,4) = EG13*(BBAR(1)+BBAR(2))/TWO
+
       IF(NSHR.EQ.3) THEN
-            DDSDDE(1, 5)= EG23*BBAR(5)/TWO
-            DDSDDE(2, 5)=-EG23*BBAR(5)
-            DDSDDE(3, 5)= EG23*BBAR(5)/TWO
-            DDSDDE(1, 6)=-EG23*BBAR(6)
-            DDSDDE(2, 6)= EG23*BBAR(6)/TWO
-            DDSDDE(3, 6)= EG23*BBAR(6)/TWO
-            DDSDDE(5, 5)= EG*(BBAR(1)+BBAR(3))/TWO
-            DDSDDE(6, 6)= EG*(BBAR(2)+BBAR(3))/TWO
-            DDSDDE(4,5)= EG*BBAR(6)/TWO
-            DDSDDE(4,6)= EG*BBAR(5)/TWO
-            DDSDDE(5,6)= EG*BBAR(4)/TWO
+            DDSDDE(1,5) = EG13*BBAR(5)
+            DDSDDE(2,5) = ZERO
+            DDSDDE(3,5) = EG13*BBAR(5)
+
+            DDSDDE(1,6) = ZERO
+            DDSDDE(2,6) = EG13*BBAR(6)
+            DDSDDE(3,6) = EG13*BBAR(6)
+
+            DDSDDE(5,5) = EG13*(BBAR(1)+BBAR(3))/TWO
+            DDSDDE(6,6) = EG13*(BBAR(2)+BBAR(3))/TWO
+
+            DDSDDE(4,5) = EG13*BBAR(6)/TWO
+            DDSDDE(4,6) = EG13*BBAR(5)/TWO
+            DDSDDE(5,6) = EG13*BBAR(4)/TWO
       END IF
       DO K1=1, NTENS
             DO K2=1, K1-1
@@ -1036,7 +1048,7 @@ C Define unit tensor
 
 c
 C PROPS
-      DOUBLE PRECISION :: NF0,E1,K1,K2,E2
+      DOUBLE PRECISION :: ETA,E1,K1,K2,E2
 
 c************************************************************************
 c     A         Q in derivation of equations in thesis [MPa]
@@ -1067,7 +1079,7 @@ c     sigmai    current fibrils stress [MPa]
 c     sigmaold  fibril stress from previous increment [MPa]
 c     vec       vector representation of the fibril [-]
 c************************************************************************
-C    PROPS(1) - dashpot stiffness[MPa s]
+C    PROPS(1) - dashpot viscosity parameter [MPa s]
 C    PROPS(2) - E1 material constant (elastic fibrilpart) [MPa][-]
 C    PROPS(3) - k1 material constant (elastic fibrilpart) [MPa][-]
 C    PROPS(4) - E2 material constant (viscoelastic fibrilpart)[MPa][-]
@@ -1089,7 +1101,7 @@ C--------------------------------------------------------------------------
 C Definitions of the PROPS array
 C--------------------------------------------------------------------------
 C
-      NF0 = PROPS(1)
+      ETA = PROPS(1)
       E1 = PROPS(2)
       k1 = PROPS(3)
       E2 = PROPS(4)
@@ -1188,8 +1200,8 @@ c      IF (S2choice.EQ.0) THEN
 c
             dt = DTIME
             de = (epsi-epsold)/dt
-            bb = -de*NF0+NF0/(k2*dt)+E2
-            cc = -de*E2*NF0-NF0*s2old/(k2*dt)
+            bb = -de*ETA+ETA/(k2*dt)+E2
+            cc = -de*E2*ETA-ETA*s2old/(k2*dt)
             sqrtDD = SQRT(bb**TWO-FOUR*cc)
             s1 = E1*(EXP(k1*epsi)-ONE)                                    !Stress of elastic part (Eq. 3)
             s2 = -HALF*bb+HALF*sqrtDD
@@ -1222,7 +1234,7 @@ c
                   ds = E1*k1*EXP(k1*epsi)
             ELSE
                   ds = E1*k1*EXP(k1*epsi)+
-     1                 HALF*NF0/dt+(-HALF*bb*NF0/dt+E2*NF0/dt)/sqrtDD
+     1                 HALF*ETA/dt+(-HALF*bb*ETA/dt+E2*ETA/dt)/sqrtDD
             END IF
 c
 c------------------------------------------------------------------------
