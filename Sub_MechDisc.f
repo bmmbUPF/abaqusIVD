@@ -355,7 +355,7 @@ C  - M: positive constant (Variable=2 in inp file, ARRAY(2))
 C
 C          Values taken from alpha.inp and emme.inp files
 C
-C              Last update by Carlos Ruiz 5/20/2013
+C              Last update by Estefano Muñoz-Moya 05/08/2024
 C
 C------------------------------------------------------------------------
 C
@@ -429,7 +429,7 @@ c
 c         From Wilson et al. (2006) OsteoArthritis and Cartilage
 c          Adapted to the IVD by Schoerder et al. (2006-2010)
 c
-c               Last update by Carlos Ruiz, 23/04/2024 
+c               Last update by Estefano Muñoz-Moya, 05/08/2024 
 c************************************************************************
 c
       SUBROUTINE UMAT(STRESS,STATEV,DDSDDE,SSE,SPD,SCD,
@@ -476,7 +476,7 @@ c
 c         From Wilson et al. (2006) OsteoArthritis and Cartilage
 c          Adapted to the IVD by Schoerder et al. (2006-2010)
 c
-c               Last update by Carlos Ruiz, 23/04/2024 
+c               Last update by Estefano Muñoz-Moya, 05/08/2024 
 c************************************************************************
 c
       SUBROUTINE UMAT_MATRIX(STRESS,STATEV,DDSDDE,SSE,SPD,SCD,
@@ -601,7 +601,7 @@ c
 c------------------------------------------------------------------------
 c
 c	          PARAMETER INITIAL CONDITION 
-c              Last update by Carlos Ruiz 5/20/2013
+c              Last update by Estefano Muñoz-Moya, 05/08/2024
 c
 c------------------------------------------------------------------------
 c
