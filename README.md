@@ -35,10 +35,10 @@ If you use any part of these subroutines or scripts, **please cite the paper des
    *Unveiling interactions between intervertebral disc morphologies and mechanical behavior through personalized finite element modeling.*  
    **Front. Bioeng. Biotechnol. 12:1384599.** https://doi.org/10.3389/fbioe.2024.1384599
 
-2. **Transport model (under review)**  
-   Muñoz‑Moya, E., Ruiz Wills, C., Nguyen, H. H., Tiulpin, A., Piella, G., & Noailly, J. (2025).  
-   *Novel finite element fully coupled multi‑species mechano‑transport simulations approach of the Intervertebral Disc.*  
-   **Computer Methods and Programs in Biomedicine** (under review).
+2. **Transport model**  
+   Muñoz-Moya E., Ruiz Wills C., Nguyen H. H., Tiulpin A., Piella G., Noailly J. (2026).  
+   *Novel finite element fully coupled multi-species mechano-transport simulations approach of the Intervertebral Disc.*  
+   **Computer Methods and Programs in Biomedicine, Article 109531.** https://doi.org/10.1016/j.cmpb.2026.109531
 
 If you **use any of the morphed, patient‑personalized FE models from SpineView**, please also cite:
 
@@ -61,7 +61,8 @@ abaqusIVD/
 ├── GENERIC_Transport.inp     # Multi-species transport (UEL, submodeling)
 ├── Sub_MechDisc.f            # UMAT
 ├── Sub_TransDisc.f           # UEL
-├── src/                      # (necessary to run the models) helper scripts/macros
+├── src/                      # Helper scripts/macros necessary to run the models
+├── LICENSE                   # MIT License
 └── README.md
 ```
 
@@ -133,13 +134,19 @@ PATH/MECH_SIM.odb and PATH/TRANSP_SIM.inp arguments: `GENERIC_Mechanic.odb GENER
 
 ---
 
+## License
+
+The software in this repository is released under the **MIT License**. See [`LICENSE`](LICENSE) for the complete license text.
+
+---
+
 ## About the author & connect
 
 **Estefano Muñoz‑Moya**  
-**PhD student (ESR14), Biomechanics & Mechanobiology (BMMB), SIMBIOsys, BCN MedTech, Department of Engineering, Universitat Pompeu Fabra (UPF), Barcelona, Spain.**
+**PhD in Biomedical Engineering, Biomechanics & Mechanobiology (BMMB), SIMBIOsys, BCN MedTech, Department of Engineering, Universitat Pompeu Fabra (UPF), Barcelona, Spain.**
 
 **Biosketch**  
-Estefano Muñoz‑Moya is the Early Stage Researcher (ESR) 14 and Ph.D. candidate in the European Project Disc4All (H2020‑MSCA‑ITN‑2020) at Universitat Pompeu Fabra. He holds a degree in Engineering Sciences with a mention in Mechanical Engineering (2017), a Civil Engineering degree (2020), and an M.Sc. in Mechanical Engineering (2020) from the University of Santiago de Chile. His current research focuses on systematizing multiscale modeling of intervertebral disc degeneration, locally integrating molecular/cell and tissue/organ scale models into intelligent atlases of simulated data to enable spatio‑temporal characterization of degeneration and clinically exploitable risk hierarchies.
+Estefano Muñoz-Moya holds a PhD in Biomedical Engineering from Universitat Pompeu Fabra (UPF) and was an Early Stage Researcher in the European project Disc4All (MSCA-2020-ITN-ETN, GA 955735). He also holds a degree and an MSc in Mechanical Engineering from the University of Santiago de Chile (USACH). His research focuses on patient-personalised finite element modelling, multiscale mechano-transport simulations and data-driven stratification of intervertebral disc degeneration.
 
 **Links**
 - 🌐 Website: <http://estefano23.github.io>  
